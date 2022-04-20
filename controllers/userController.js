@@ -1,5 +1,4 @@
-const res = require('express/lib/response');
-const { User } = require('../models');
+const {User } = require('../models');
 
 const getAllUsers = async (req,res) => {
    try {
@@ -54,7 +53,7 @@ const deleteUser = async (req,res) => {
 const updateUserInfor = async (req,res) => {
   try{
     const userData = await User.findOneAndUpdate(
-      { _id: req.params.studentId },
+      { _id: req.params.userID },
       { ...req.body },
       { runValidators: true, new: true });
       if (!userData) { 
@@ -71,10 +70,14 @@ const updateUserInfor = async (req,res) => {
 const addFriend = async (req,res) => {
   try {
     const userData = await User.findOneAndUpdate(
-      { _id: req.params.studentId },
-      { $addToSet: { friends: req.params.friendId } },
-      { new: true });
-    
+      { _id: req.params.userID },
+      { $addToSet: { friends: {_id:req.params.friendID} } },
+      {runValidators: true, new: true });
+
+    if (!userData) { 
+      res.status(404).json({ message: 'No user with that ID' });
+    }
+    else  res.json(userData);
   }
   catch (err) {
     console.log(err);
@@ -85,9 +88,14 @@ const addFriend = async (req,res) => {
 const deleteFriend = async (req,res) => {
   try {
     const userData = await User.findOneAndUpdate(
-      { _id: req.params.studentId },
-      { $pull: { friends: req.params.assignmentId} },
+      { _id: req.params.userID },
+      { $pull: { friends: req.params.friendID } },
       { new: true });
+
+    if (!userData) { 
+      res.status(404).json({ message: 'No user with that ID' });
+    }
+    else  res.json(userData);
     
   }
   catch (err) {
@@ -95,3 +103,5 @@ const deleteFriend = async (req,res) => {
     res.status(500).json(err);
   }
 }
+
+module.exports = {getAllUsers,getSingleUser,createNewUser,deleteUser,updateUserInfor,addFriend,deleteFriend,}
