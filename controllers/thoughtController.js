@@ -46,7 +46,7 @@ const createThought = async (req,res) => {
 
 const updateThought = async (req,res) => {
     try{
-        const thoughtData = await User.findOneAndUpdate(
+        const thoughtData = await Thought.findOneAndUpdate(
           { _id: req.params.thoughtID },
           { thoughtText:req.body.thoughtText },
           { runValidators: true, new: true });
