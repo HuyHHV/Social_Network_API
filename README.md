@@ -18,7 +18,14 @@ This is an API for a social network web application where users can share their 
 
 The following video shows the web application's appearance and functionality:
 
+* users routes /api/users
+https://drive.google.com/file/d/142UADo1BQLdXV9iGa-f6tjPDvU143ke_/view
 
+* thought routes /api/thoughts
+https://drive.google.com/file/d/1PjGrCI5SVcEG49-kkntFK2-JN_FhWx7R/view
+
+* reaction routes /api/thoughts/:thoughtID/reactions
+https://drive.google.com/file/d/1LMyvGqk_-p8LJeZ4CzeCzZA-2JCiun63/view
 
 ## URLs
 
