@@ -1,4 +1,4 @@
-const {User } = require('../models');
+const {User,Thought } = require('../models');
 
 const getAllUsers = async (req,res) => {
    try {
@@ -42,7 +42,10 @@ const deleteUser = async (req,res) => {
     if (!deletedUser) { 
       res.status(404).json({ message: 'No user with that ID' });
     }
-    else  res.json(deletedUser);
+    else  {
+      const deletedThought = await Thought.deleteMany({ _id: { $in: user.thoughts}})
+      res.json(deletedUser,deletedThought);
+    }
   }
   catch (err) {
     console.log(err);
