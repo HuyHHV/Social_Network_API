@@ -1,4 +1,5 @@
 const connection = require('../config/connection');
+const { User,Thought } = require('../models');
 const userData = require('./userData.json')
 
 connection.on('error', (err) => err);
@@ -9,8 +10,9 @@ console.time('seeding');
 connection.once('open', async () => {
   console.log('connected');
 
-  // Drop existing users
+  // Drop existing users,thoughts
   await User.deleteMany({});
+  await Thought.deleteMany({});
 
   // Add students to the collection and await the results
   await User.collection.insertMany(userData);

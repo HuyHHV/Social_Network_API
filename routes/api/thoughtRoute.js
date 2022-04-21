@@ -3,7 +3,9 @@ const thoughtController = require('../../controllers/thoughtController');
 const reactionController = require('../../controllers/reactionController.js');
 
 // /api/thoughts
-router.route('/').get(thoughtController.getAllThought)
+router.route('/')
+.get(thoughtController.getAllThought)
+.post(thoughtController.createThought)
 
 //  /api/thoughts/:thoughtID
 router.route('/:thoughtID')

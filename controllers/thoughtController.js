@@ -27,16 +27,17 @@ const getSingleThought = async (req,res) => {
 
 const createThought = async (req,res) => {
     try {
+        const checkUserID = await User.findById(req.body.userID);
+        if (!checkUserID) {
+          return res.status(404).json({ message: 'No user with that ID' });
+        };
         const newThought = await Thought.create(req.body);
         const userData = await User.findOneAndUpdate(
             {_id:req.body.userID},
             {$addToSet: {thoughts:newThought._id}},
             {new:true}
         )
-        if (!userData) { 
-            res.status(404).json({ message: 'No user with that ID' });
-          }
-        else  res.json('new thought added');
+        res.json('new thought added');
       }
       catch (err) {
         console.log(err);
@@ -74,7 +75,7 @@ const deleteThought = async (req,res) => {
             { $pull: { thoughts: req.params.thoughtID } },
             { new: true }
           )
-        res.json(deletedThought,userData);
+        res.json(userData);
       }
     }
     catch (err) {
