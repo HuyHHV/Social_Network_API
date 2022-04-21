@@ -43,8 +43,8 @@ const deleteUser = async (req,res) => {
       res.status(404).json({ message: 'No user with that ID' });
     }
     else  {
-      const deletedThought = await Thought.deleteMany({ _id: { $in: user.thoughts}})
-      res.json(deletedUser,deletedThought);
+      const deletedThought = await Thought.deleteMany({ _id: { $in: deletedUser.thoughts}})
+      res.json(deletedUser);
     }
   }
   catch (err) {
